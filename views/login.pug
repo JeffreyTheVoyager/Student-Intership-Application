@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/css/login.css")
+        title Login
+    body 
+        form(action='/index.pug', method='post')
+            .group
+                input(type='text', placeholder='Name')
+                span.highlight
+                span.bar
+            button.button.buttonBlue(type='button')
+                | Enter
+                .ripples.buttonRipples
+                span.ripplesCircle
