@@ -7,12 +7,12 @@ html(lang="en")
         link(rel="stylesheet", href="/css/login.css")
         title Login
     body 
-        form(action='/index.pug', method='post')
+        form(action='/login', method='post')
             .group
-                input(type='text', placeholder='Name')
+                input(type='text', placeholder='Name', name='name')
                 span.highlight
                 span.bar
-            button.button.buttonBlue(type='button')
+            button.button.buttonBlue(type='submit')
                 | Enter
                 .ripples.buttonRipples
                 span.ripplesCircle
