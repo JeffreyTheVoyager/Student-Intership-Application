@@ -1,13 +1,26 @@
 const { config } = require('dotenv')
 const express = require('express')
-const sqlite3 = require('sqlite3').verbose()
+const client = require('./db/db_connection.js')
+const student = require('./db/src/student/controller.js')
 require('dotenv').config()
 
 const app = express()
 
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
+// Postgres Connection
+async function connect(client){
+    try {
+        await client.connect()
+        console.log('Client connect')
+    } catch (err) {
+       console.log(err) 
+    }
+}
+
 app.set('view engine', 'pug')
 app.use(express.static('public'))
-app.use(express.urlencoded({extended: false}))
 
 /* Home */
 app.get('/', (req, res)=>{
@@ -21,8 +34,7 @@ app.get('/login', (req, res)=>{
 })
 
 app.post('/login', (req, res)=>{
-    const {name} = req.body
-    insertStudent(name)
+    student.addStudents(req, res)    
     res.redirect('/')
 })
 
@@ -30,3 +42,4 @@ app.post('/login', (req, res)=>{
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, ()=> console.log(`Server started on port: ${PORT}`))
+connect(client)
