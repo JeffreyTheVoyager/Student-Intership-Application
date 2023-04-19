@@ -2,12 +2,15 @@ const { config } = require('dotenv')
 const express = require('express')
 const client = require('./db/db_connection.js')
 const student = require('./db/src/student/controller.js')
+const cookieParser = require('cookie-parser')
+const {cookieJwtAuth} = require('./middleware/cookieJwtAuth.js')
 require('dotenv').config()
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cookieParser())
 
 // Postgres Connection
 async function connect(client){
@@ -23,7 +26,7 @@ app.set('view engine', 'pug')
 app.use(express.static('public'))
 
 /* Home */
-app.get('/', (req, res)=>{
+app.get('/', cookieJwtAuth, (req, res)=>{
     res.send(`Hello World`)
 })
 
