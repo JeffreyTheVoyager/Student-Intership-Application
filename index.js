@@ -1,7 +1,6 @@
 const { config } = require('dotenv')
 const express = require('express')
 const client = require('./db/db_connection.js')
-const student = require('./db/src/student/controller.js')
 const cookieParser = require('cookie-parser')
 const {cookieJwtAuth} = require('./middleware/cookieJwtAuth.js')
 require('dotenv').config()
@@ -30,16 +29,8 @@ app.get('/', cookieJwtAuth, (req, res)=>{
     res.send(`Hello World`)
 })
 
-
 /* Login */
-app.get('/login', (req, res)=>{
-    res.render('login.pug')
-})
-
-app.post('/login', (req, res)=>{
-    student.addStudents(req, res)    
-    res.redirect('/')
-})
+app.use('/', require('./routes/login.js'))
 
 
 const PORT = process.env.PORT || 5000;

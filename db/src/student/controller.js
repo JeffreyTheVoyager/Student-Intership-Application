@@ -11,18 +11,12 @@ const getStudents = (req, res) =>{
     })
 }
 
-const addStudents = (req, res) =>{
+exports.addStudents = async (req, res) =>{
     const n = crypto.randomInt(0, 100000)
     const {name} = req.body;
-    let year = 2001
 
-    pool.query(queries.addStudents, [n, name, year], (err, results) =>{
+    pool.query(queries.addStudents, [n, name], (err, results) =>{
         if(err) throw err
         res.status(201).send('Student Created Successfully')
     })
-}
-
-module.exports = {
-    getStudents,
-    addStudents
 }
